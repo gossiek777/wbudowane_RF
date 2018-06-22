@@ -1,4 +1,5 @@
 #include "avr_compiler.h"
+#include "avr/sleep.h"
 #include "led.h"
 
 #define BOOT_BUTT_bm	3
@@ -17,6 +18,12 @@ int main (void){
 	PMIC.CTRL=(1<<0);	//Low-level Interrupt Enable
 	sei(); // global interrupts enabling
 
-	while(1) {};
+	set_sleep_mode(SLEEP_MODE_IDLE);
+	sleep_enable();
+	while(1) {
+		sleep_cpu();
+	};
 }
-//pobór pr¹du: ok 2,4 mA gdy Led nie œwieci (z zaœwieconym ledem ok 3mA)
+//pobór pr¹du: 
+//pkt 4:	ok 2.4 mA gdy Led nie œwieci (z zaœwieconym ledem ok 3mA)
+//pkt 5:	ok 1.9 mA gdy Led nie œwieci (z zaœwieconym ledem ok 2.5mA)

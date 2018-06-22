@@ -323,6 +323,7 @@ Discarded input sections
  .group         0x00000000        0x8 src/main.o
  .group         0x00000000        0x8 src/main.o
  .group         0x00000000        0x8 src/main.o
+ .group         0x00000000        0x8 src/main.o
  .text          0x00000000        0x0 src/main.o
  .data          0x00000000        0x0 src/main.o
  .bss           0x00000000        0x0 src/main.o
@@ -503,7 +504,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000      0x29a
+.text           0x00000000      0x2ac
  *(.vectors)
  .vectors       0x00000000      0x1fc c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega2/crtx32a4u.o
                 0x00000000                __vector_default
@@ -695,13 +696,13 @@ END GROUP
  .text.__vector_2
                 0x00000232       0x46 src/main.o
                 0x00000232                __vector_2
- .text.main     0x00000278       0x1e src/main.o
+ .text.main     0x00000278       0x30 src/main.o
                 0x00000278                main
-                0x00000296                . = ALIGN (0x2)
+                0x000002a8                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x00000296        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avrxmega2\libgcc.a(_exit.o)
-                0x00000296                _exit
-                0x00000296                exit
+ .fini9         0x000002a8        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avrxmega2\libgcc.a(_exit.o)
+                0x000002a8                _exit
+                0x000002a8                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -720,11 +721,11 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x00000296        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avrxmega2\libgcc.a(_exit.o)
+ .fini0         0x000002a8        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avrxmega2\libgcc.a(_exit.o)
  *(.fini0)
-                0x0000029a                _etext = .
+                0x000002ac                _etext = .
 
-.data           0x00802000        0x0 load address 0x0000029a
+.data           0x00802000        0x0 load address 0x000002ac
                 0x00802000                PROVIDE (__data_start, .)
  *(.data)
  *(.data*)
@@ -741,8 +742,8 @@ END GROUP
  *(.bss*)
  *(COMMON)
                 0x00802000                PROVIDE (__bss_end, .)
-                0x0000029a                __data_load_start = LOADADDR (.data)
-                0x0000029a                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x000002ac                __data_load_start = LOADADDR (.data)
+                0x000002ac                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x00802000        0x0
                 0x00802000                PROVIDE (__noinit_start, .)
@@ -829,22 +830,22 @@ END GROUP
  .debug_abbrev  0x00000000       0x95 src/led.o
  .debug_abbrev  0x00000095       0xcf src/main.o
 
-.debug_line     0x00000000      0x685
+.debug_line     0x00000000      0x6a6
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x348 src/led.o
- .debug_line    0x00000348      0x33d src/main.o
+ .debug_line    0x00000348      0x35e src/main.o
 
 .debug_frame    0x00000000       0xd0
  *(.debug_frame)
  .debug_frame   0x00000000       0x54 src/led.o
  .debug_frame   0x00000054       0x7c src/main.o
 
-.debug_str      0x00000000    0x191f3
+.debug_str      0x00000000    0x19507
  *(.debug_str)
  .debug_str     0x00000000    0x1910b src/led.o
                               0x1963b (size before relaxing)
- .debug_str     0x0001910b       0xe8 src/main.o
-                              0x19281 (size before relaxing)
+ .debug_str     0x0001910b      0x3fc src/main.o
+                              0x19595 (size before relaxing)
 
 .debug_loc      0x00000000       0xcb
  *(.debug_loc)
@@ -873,7 +874,7 @@ END GROUP
  .debug_ranges  0x00000000       0x28 src/led.o
  .debug_ranges  0x00000028       0x18 src/main.o
 
-.debug_macro    0x00000000     0x6dff
+.debug_macro    0x00000000     0x6e66
  *(.debug_macro)
  .debug_macro   0x00000000      0x11d src/led.o
  .debug_macro   0x0000011d      0xa3c src/led.o
@@ -902,6 +903,7 @@ END GROUP
  .debug_macro   0x00006afa      0x167 src/led.o
  .debug_macro   0x00006c61       0x2e src/led.o
  .debug_macro   0x00006c8f       0x68 src/led.o
- .debug_macro   0x00006cf7      0x108 src/main.o
+ .debug_macro   0x00006cf7      0x111 src/main.o
+ .debug_macro   0x00006e08       0x5e src/main.o
 OUTPUT(RF_part1.elf elf32-avr)
 LOAD linker stubs
