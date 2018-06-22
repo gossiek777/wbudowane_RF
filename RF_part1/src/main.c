@@ -18,8 +18,12 @@ int main (void){
 	PMIC.CTRL=PMIC_LOLVLEN_bm;	
 	sei(); // global interrupts enabling
 
+	set_sleep_mode(SLEEP_MODE_IDLE); 
+	sleep_enable(); 
 	while(1) {
-	};
+		sleep_cpu();
+	}
 }
 //pobór pr¹du: 
 //pkt 4:	ok 2.4 mA gdy Led nie œwieci (z zaœwieconym ledem ok 3mA)
+//pkt 5:	ok 1.9 mA gdy Led nie œwieci (z zaœwieconym ledem ok 2.5mA)
