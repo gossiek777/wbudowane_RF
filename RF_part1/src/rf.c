@@ -101,7 +101,7 @@ void rf_init_as_tx(void){
 
 	reg_write(CONFIG,(1<<PWR_UP)|(1<<EN_CRC)|(1<<MASK_TX_DS));
 	reg_write(EN_AA,0);
-	reg_write(RF_SETUP,(1<<RF_DR));
+	reg_write(RF_SETUP,(1<<RF_DR)); //2Mbps
 	reg_write(RF_CH, 12);
 	
 	delay_us(2000);

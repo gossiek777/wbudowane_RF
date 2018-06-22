@@ -43,7 +43,8 @@ Discarded input sections
  .text          0x00000000        0x0 src/led.o
  .data          0x00000000        0x0 src/led.o
  .bss           0x00000000        0x0 src/led.o
- .text.led_toggle
+ .text.led_set  0x00000000        0xa src/led.o
+ .text.led_clear
                 0x00000000        0xa src/led.o
  .group         0x00000000        0x8 src/rf.o
  .group         0x00000000        0x8 src/rf.o
@@ -78,12 +79,33 @@ Discarded input sections
  .bss           0x00000000        0x0 src/rf.o
  .text.set_CS   0x00000000       0x18 src/rf.o
  .text.set_CE   0x00000000       0x18 src/rf.o
+ .text.spi_init
+                0x00000000       0x38 src/rf.o
+ .text.reg_write
+                0x00000000       0x34 src/rf.o
  .text.reg_read
                 0x00000000       0x2e src/rf.o
+ .text.payload_write
+                0x00000000       0x50 src/rf.o
+ .text.status_bit_test
+                0x00000000       0x4a src/rf.o
  .text.set_bit_in_reg
                 0x00000000       0x46 src/rf.o
+ .text.rf_init_as_tx
+                0x00000000       0x48 src/rf.o
  .text.rf_clear_int_flags
                 0x00000000        0xa src/rf.o
+ .text.rf_send_byte
+                0x00000000       0x30 src/rf.o
+ .text.rf_wait_until_data_sent
+                0x00000000        0xc src/rf.o
+ .debug_info    0x00000000      0xb58 src/rf.o
+ .debug_abbrev  0x00000000      0x27a src/rf.o
+ .debug_loc     0x00000000      0x470 src/rf.o
+ .debug_aranges
+                0x00000000       0x78 src/rf.o
+ .debug_ranges  0x00000000       0x68 src/rf.o
+ .debug_macro   0x00000000      0x147 src/rf.o
  .debug_macro   0x00000000      0xa3c src/rf.o
  .debug_macro   0x00000000       0x10 src/rf.o
  .debug_macro   0x00000000      0x1ad src/rf.o
@@ -110,6 +132,13 @@ Discarded input sections
  .debug_macro   0x00000000      0x167 src/rf.o
  .debug_macro   0x00000000       0x2e src/rf.o
  .debug_macro   0x00000000       0x68 src/rf.o
+ .debug_macro   0x00000000       0x5d src/rf.o
+ .debug_macro   0x00000000      0x175 src/rf.o
+ .debug_line    0x00000000      0x54c src/rf.o
+ .debug_str     0x00000000    0x19ef7 src/rf.o
+ .comment       0x00000000       0x31 src/rf.o
+ .debug_frame   0x00000000      0x158 src/rf.o
+ COMMON         0x00000000        0x7 src/rf.o
  .group         0x00000000        0x8 src/spi.o
  .group         0x00000000        0x8 src/spi.o
  .group         0x00000000        0x8 src/spi.o
@@ -139,6 +168,8 @@ Discarded input sections
  .text          0x00000000        0x0 src/spi.o
  .data          0x00000000        0x0 src/spi.o
  .bss           0x00000000        0x0 src/spi.o
+ .text.SPI_MasterInit
+                0x00000000       0x5a src/spi.o
  .text.SPI_SlaveInit
                 0x00000000       0x36 src/spi.o
  .text.SPI_MasterCreateDataPacket
@@ -147,8 +178,17 @@ Discarded input sections
                 0x00000000       0x80 src/spi.o
  .text.SPI_MasterInterruptTransceivePacket
                 0x00000000       0x6e src/spi.o
+ .text.SPI_MasterTransceiveByte
+                0x00000000       0x18 src/spi.o
  .text.SPI_MasterTransceivePacket
                 0x00000000       0xa8 src/spi.o
+ .debug_info    0x00000000      0x762 src/spi.o
+ .debug_abbrev  0x00000000      0x1b2 src/spi.o
+ .debug_loc     0x00000000      0x4d7 src/spi.o
+ .debug_aranges
+                0x00000000       0x50 src/spi.o
+ .debug_ranges  0x00000000       0x40 src/spi.o
+ .debug_macro   0x00000000      0x10d src/spi.o
  .debug_macro   0x00000000      0xa3c src/spi.o
  .debug_macro   0x00000000       0x10 src/spi.o
  .debug_macro   0x00000000      0x1ad src/spi.o
@@ -174,6 +214,11 @@ Discarded input sections
  .debug_macro   0x00000000       0x10 src/spi.o
  .debug_macro   0x00000000      0x167 src/spi.o
  .debug_macro   0x00000000       0x2e src/spi.o
+ .debug_macro   0x00000000       0x57 src/spi.o
+ .debug_line    0x00000000      0x589 src/spi.o
+ .debug_str     0x00000000    0x1968e src/spi.o
+ .comment       0x00000000       0x31 src/spi.o
+ .debug_frame   0x00000000       0xcc src/spi.o
  .group         0x00000000        0x8 src/ASF/common/boards/user_board/init.o
  .group         0x00000000        0x8 src/ASF/common/boards/user_board/init.o
  .group         0x00000000        0x8 src/ASF/common/boards/user_board/init.o
@@ -458,7 +503,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000      0x43a
+.text           0x00000000      0x29a
  *(.vectors)
  .vectors       0x00000000      0x1fc c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega2/crtx32a4u.o
                 0x00000000                __vector_default
@@ -601,7 +646,6 @@ END GROUP
                 0x0000021c                __vector_118
                 0x0000021c                __vector_51
                 0x0000021c                __vector_9
-                0x0000021c                __vector_2
                 0x0000021c                __vector_21
                 0x0000021c                __vector_15
                 0x0000021c                __vector_66
@@ -645,45 +689,19 @@ END GROUP
  .text.led_init
                 0x0000021e        0xa src/led.o
                 0x0000021e                led_init
- .text.led_set  0x00000228        0xa src/led.o
-                0x00000228                led_set
- .text.led_clear
-                0x00000232        0xa src/led.o
-                0x00000232                led_clear
- .text.spi_init
-                0x0000023c       0x36 src/rf.o
-                0x0000023c                spi_init
- .text.reg_write
-                0x00000272       0x30 src/rf.o
-                0x00000272                reg_write
- .text.payload_write
-                0x000002a2       0x4c src/rf.o
-                0x000002a2                payload_write
- .text.status_bit_test
-                0x000002ee       0x46 src/rf.o
-                0x000002ee                status_bit_test
- .text.rf_init_as_tx
-                0x00000334       0x3e src/rf.o
-                0x00000334                rf_init_as_tx
- .text.rf_send_byte
-                0x00000372       0x2e src/rf.o
-                0x00000372                rf_send_byte
- .text.rf_wait_until_data_sent
-                0x000003a0        0xa src/rf.o
-                0x000003a0                rf_wait_until_data_sent
- .text.SPI_MasterInit
-                0x000003aa       0x5a src/spi.o
-                0x000003aa                SPI_MasterInit
- .text.SPI_MasterTransceiveByte
-                0x00000404       0x18 src/spi.o
-                0x00000404                SPI_MasterTransceiveByte
- .text.main     0x0000041c       0x1a src/main.o
-                0x0000041c                main
-                0x00000436                . = ALIGN (0x2)
+ .text.led_toggle
+                0x00000228        0xa src/led.o
+                0x00000228                led_toggle
+ .text.__vector_2
+                0x00000232       0x46 src/main.o
+                0x00000232                __vector_2
+ .text.main     0x00000278       0x1e src/main.o
+                0x00000278                main
+                0x00000296                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x00000436        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avrxmega2\libgcc.a(_exit.o)
-                0x00000436                _exit
-                0x00000436                exit
+ .fini9         0x00000296        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avrxmega2\libgcc.a(_exit.o)
+                0x00000296                _exit
+                0x00000296                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -702,11 +720,11 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x00000436        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avrxmega2\libgcc.a(_exit.o)
+ .fini0         0x00000296        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avrxmega2\libgcc.a(_exit.o)
  *(.fini0)
-                0x0000043a                _etext = .
+                0x0000029a                _etext = .
 
-.data           0x00802000        0x0 load address 0x0000043a
+.data           0x00802000        0x0 load address 0x0000029a
                 0x00802000                PROVIDE (__data_start, .)
  *(.data)
  *(.data*)
@@ -717,25 +735,21 @@ END GROUP
                 0x00802000                _edata = .
                 0x00802000                PROVIDE (__data_end, .)
 
-.bss            0x00802000        0x8
+.bss            0x00802000        0x0
                 0x00802000                PROVIDE (__bss_start, .)
  *(.bss)
  *(.bss*)
- .bss.ucMsgCtr.4060
-                0x00802000        0x1 src/main.o
  *(COMMON)
- COMMON         0x00802001        0x7 src/rf.o
-                0x00802001                rf_spi_master
-                0x00802008                PROVIDE (__bss_end, .)
-                0x0000043a                __data_load_start = LOADADDR (.data)
-                0x0000043a                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x00802000                PROVIDE (__bss_end, .)
+                0x0000029a                __data_load_start = LOADADDR (.data)
+                0x0000029a                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x00802008        0x0
-                0x00802008                PROVIDE (__noinit_start, .)
+.noinit         0x00802000        0x0
+                0x00802000                PROVIDE (__noinit_start, .)
  *(.noinit*)
-                0x00802008                PROVIDE (__noinit_end, .)
-                0x00802008                _end = .
-                0x00802008                PROVIDE (__heap_start, .)
+                0x00802000                PROVIDE (__noinit_end, .)
+                0x00802000                _end = .
+                0x00802000                PROVIDE (__heap_start, .)
 
 .eeprom         0x00810000        0x0
  *(.eeprom*)
@@ -778,8 +792,6 @@ END GROUP
  *(.comment)
  .comment       0x00000000       0x30 src/led.o
                                  0x31 (size before relaxing)
- .comment       0x00000000       0x31 src/rf.o
- .comment       0x00000000       0x31 src/spi.o
  .comment       0x00000000       0x31 src/main.o
 
 .note.gnu.build-id
@@ -797,63 +809,46 @@ END GROUP
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x00000000      0x120
+.debug_aranges  0x00000000       0x60
  *(.debug_aranges)
  .debug_aranges
                 0x00000000       0x38 src/led.o
  .debug_aranges
-                0x00000038       0x78 src/rf.o
- .debug_aranges
-                0x000000b0       0x50 src/spi.o
- .debug_aranges
-                0x00000100       0x20 src/main.o
+                0x00000038       0x28 src/main.o
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x1642
+.debug_info     0x00000000      0x5d4
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x261 src/led.o
- .debug_info    0x00000261      0xb58 src/rf.o
- .debug_info    0x00000db9      0x762 src/spi.o
- .debug_info    0x0000151b      0x127 src/main.o
+ .debug_info    0x00000261      0x373 src/main.o
 
-.debug_abbrev   0x00000000      0x55c
+.debug_abbrev   0x00000000      0x164
  *(.debug_abbrev)
  .debug_abbrev  0x00000000       0x95 src/led.o
- .debug_abbrev  0x00000095      0x27a src/rf.o
- .debug_abbrev  0x0000030f      0x1b2 src/spi.o
- .debug_abbrev  0x000004c1       0x9b src/main.o
+ .debug_abbrev  0x00000095       0xcf src/main.o
 
-.debug_line     0x00000000     0x1150
+.debug_line     0x00000000      0x685
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x348 src/led.o
- .debug_line    0x00000348      0x54c src/rf.o
- .debug_line    0x00000894      0x589 src/spi.o
- .debug_line    0x00000e1d      0x333 src/main.o
+ .debug_line    0x00000348      0x33d src/main.o
 
-.debug_frame    0x00000000      0x29c
+.debug_frame    0x00000000       0xd0
  *(.debug_frame)
  .debug_frame   0x00000000       0x54 src/led.o
- .debug_frame   0x00000054      0x158 src/rf.o
- .debug_frame   0x000001ac       0xcc src/spi.o
- .debug_frame   0x00000278       0x24 src/main.o
+ .debug_frame   0x00000054       0x7c src/main.o
 
-.debug_str      0x00000000    0x19aee
+.debug_str      0x00000000    0x191f3
  *(.debug_str)
  .debug_str     0x00000000    0x1910b src/led.o
                               0x1963b (size before relaxing)
- .debug_str     0x0001910b      0x8e8 src/rf.o
-                              0x19ef7 (size before relaxing)
- .debug_str     0x000199f3       0xdf src/spi.o
-                              0x1968e (size before relaxing)
- .debug_str     0x00019ad2       0x1c src/main.o
-                              0x1910c (size before relaxing)
+ .debug_str     0x0001910b       0xe8 src/main.o
+                              0x19281 (size before relaxing)
 
-.debug_loc      0x00000000      0x947
+.debug_loc      0x00000000       0xcb
  *(.debug_loc)
- .debug_loc     0x00000000      0x470 src/rf.o
- .debug_loc     0x00000470      0x4d7 src/spi.o
+ .debug_loc     0x00000000       0xcb src/main.o
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -873,14 +868,12 @@ END GROUP
 .debug_pubtypes
  *(.debug_pubtypes)
 
-.debug_ranges   0x00000000       0xe0
+.debug_ranges   0x00000000       0x40
  *(.debug_ranges)
  .debug_ranges  0x00000000       0x28 src/led.o
- .debug_ranges  0x00000028       0x68 src/rf.o
- .debug_ranges  0x00000090       0x40 src/spi.o
- .debug_ranges  0x000000d0       0x10 src/main.o
+ .debug_ranges  0x00000028       0x18 src/main.o
 
-.debug_macro    0x00000000     0x727a
+.debug_macro    0x00000000     0x6dff
  *(.debug_macro)
  .debug_macro   0x00000000      0x11d src/led.o
  .debug_macro   0x0000011d      0xa3c src/led.o
@@ -909,11 +902,6 @@ END GROUP
  .debug_macro   0x00006afa      0x167 src/led.o
  .debug_macro   0x00006c61       0x2e src/led.o
  .debug_macro   0x00006c8f       0x68 src/led.o
- .debug_macro   0x00006cf7      0x147 src/rf.o
- .debug_macro   0x00006e3e       0x5d src/rf.o
- .debug_macro   0x00006e9b      0x175 src/rf.o
- .debug_macro   0x00007010      0x10d src/spi.o
- .debug_macro   0x0000711d       0x57 src/spi.o
- .debug_macro   0x00007174      0x106 src/main.o
+ .debug_macro   0x00006cf7      0x108 src/main.o
 OUTPUT(RF_part1.elf elf32-avr)
 LOAD linker stubs
